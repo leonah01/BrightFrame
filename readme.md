@@ -131,17 +131,3 @@ BrightFrame/
 ```
 ---
 
-### 🔌 API Endpoints
-
-Method	Endpoint	Description
-POST	/api/login	Authenticate user
-POST	/api/register	Register a new user
-GET	/api/projects	Fetch all projects
-POST	/api/tasks	Create a new task
-GET	/api/clients	Retrieve client list
-POST	/api/invoices	Generate an invoice
-GET	/api/chat/messages	Fetch chat messages
-
-**💡 Note:** More API endpoints can be found in API_DOCS.md.
-
----
