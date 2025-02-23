@@ -89,19 +89,59 @@ The app will be accessible at: http://127.0.0.1:8000
 ### 📊 Features & Modules
 
 ### 🔐 Authentication & User Roles
-Employees must log in using @brightframe.co.zw emails.
-Role-based access control (Admin, Developer, Manager, Sales, etc.).
-📌 Project & Work Tracking
-Create and assign tasks with status tracking.
-GitHub Integration: Link commits, pull requests, and issues.
-💬 Chat System
-Real-time messaging using WebSockets (Laravel Echo + Pusher).
-Team and private conversations.
-🛒 Client & Sales Management
-Add and manage client contacts.
-Invoice & Payment Tracking (generate invoices, track payment status).
-📝 Company Blog System
-Employees can write and publish blog posts.
-Blogs appear on the company’s official website.
-📅 Calendar & Events
-Integrated calendar for scheduling meetings and project deadlines.
+-Employees must log in using @brightframe.co.zw emails.
+-Role-based access control (Admin, Developer, Manager, Sales, etc.).
+
+### 📌 Project & Work Tracking
+-Create and assign tasks with status tracking.
+-GitHub Integration: Link commits, pull requests, and issues.
+
+### 💬 Chat System
+-Real-time messaging using WebSockets (Laravel Echo + Pusher).
+-Team and private conversations.
+
+### 🛒 Client & Sales Management
+-Add and manage client contacts.
+-Invoice & Payment Tracking (generate invoices, track payment status).
+
+### 📝 Company Blog System
+-Employees can write and publish blog posts.
+-Blogs appear on the company’s official website.
+
+### 📅 Calendar & Events
+-Integrated calendar for scheduling meetings and project deadlines.
+
+---
+### 📁 Project Structure
+
+```bash
+BrightFrame/
+│── app/                    # Core Laravel Application
+│   ├── Http/               # Controllers & Middleware
+│   ├── Models/             # Eloquent Models (MongoDB)
+│   ├── Services/           # Business Logic
+│── database/               # Seeders (No Migrations for MongoDB)
+│── public/                 # CSS, JS, Images
+│── resources/              # Blade Templates (Frontend)
+│── routes/                 # API & Web Routes
+│── storage/                # Logs, File Uploads
+│── .env                    # Environment Variables
+│── composer.json           # PHP Dependencies
+│── README.md               # Project Documentation
+```
+---
+
+### 🔌 API Endpoints
+
+Method	Endpoint	Description
+POST	/api/login	Authenticate user
+POST	/api/register	Register a new user
+GET	/api/projects	Fetch all projects
+POST	/api/tasks	Create a new task
+GET	/api/clients	Retrieve client list
+POST	/api/invoices	Generate an invoice
+GET	/api/chat/messages	Fetch chat messages
+
+**💡 Note:** More API endpoints can be found in API_DOCS.md.
+
+---
