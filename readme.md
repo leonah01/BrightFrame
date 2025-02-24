@@ -45,19 +45,18 @@ php artisan key:generate
 DB_CONNECTION=mongodb
 DB_HOST=127.0.0.1
 DB_PORT=27017
+MONGO_URI="mongodb+srv://<username>:<password>@brightframe.mkkyk.mongodb.net/?retryWrites=true&w=majority&appName=BrightFrame"
 DB_DATABASE=brightframe
-DB_USERNAME=
-DB_PASSWORD=
+
 ```
 
 **If using MongoDB Atlas, update with your connection string:**
 
 ```bash
 DB_CONNECTION=mongodb
-DB_HOST=your-cluster.mongodb.net
+MONGO_URI="mongodb+srv://<username>:<password>@brightframe.mkkyk.mongodb.net/?retryWrites=true&w=majority&appName=BrightFrame"
 DB_DATABASE=brightframe
-DB_USERNAME=your-username
-DB_PASSWORD=your-password
+
 ```
 
 **Install MongoDB support for Laravel:**
