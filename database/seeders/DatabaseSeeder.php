@@ -1,45 +1,23 @@
-use Illuminate\Database\Seeder;
+<?php
+
+namespace Database\Seeders;
+
 use App\Models\User;
-use App\Models\Project;
-use App\Models\Client;
-use App\Models\Invoice;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
     {
-        // Create Admin User
-        User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@brightframe.co.zw',
-            'password' => bcrypt('password'),
-            'role' => 'admin'
-        ]);
+        // User::factory(10)->create();
 
-        // Create Sample Projects
-        Project::create([
-            'name' => 'BrightFrame App',
-            'description' => 'A project management system for BrightFrame',
-            'status' => 'in-progress',
-            'assigned_to' => 'Leonah',
-            'github_repo' => 'https://github.com/leonah01/BrightFrame'
-        ]);
-
-        // Create Sample Client
-        Client::create([
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-            'phone' => '1234567890',
-            'company_name' => 'TechCorp',
-            'sales_rep_id' => 'Takudzwa Mlambo'
-        ]);
-
-        // Create Sample Invoice
-        Invoice::create([
-            'client_id' => 'John Doe',
-            'amount' => 2500.00,
-            'status' => 'unpaid',
-            'due_date' => now()->addDays(30)
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
         ]);
     }
 }
