@@ -56,9 +56,9 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('DB_SSLMODE') === 'require' ? '/path/to/ca-cert.pem' : null,
+                PDO::MYSQL_ATTR_SSL_CA => env('DB_SSL_CERT', 'D:\Projects\new\brightframe\BrightFrame\certs\DigiCertGlobalRootCA.crt.pem'),
             ]) : [],
-        ],
+        ],        
         
 
         'mariadb' => [
