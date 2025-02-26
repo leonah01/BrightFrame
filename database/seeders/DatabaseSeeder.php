@@ -1,3 +1,5 @@
+<?php
+
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Project;
@@ -8,38 +10,41 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        // Create Admin User
-        User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@brightframe.co.zw',
-            'password' => bcrypt('password'),
-            'role' => 'admin'
-        ]);
+        // Create a test user
+        $user = User::firstOrCreate(
+            ['email' => 'ldongo@brightframe.co.zw'],
+            [
+                'name' => 'Leonah Dongo',
+                'password' => bcrypt('BR1GHTFR4M3@1005'),
+                'role' => 'developer'
+            ]
+        );
 
-        // Create Sample Projects
-        Project::create([
-            'name' => 'BrightFrame App',
-            'description' => 'A project management system for BrightFrame',
-            'status' => 'in-progress',
-            'assigned_to' => 'Leonah',
-            'github_repo' => 'https://github.com/leonah01/BrightFrame'
-        ]);
+        // Create a client (avoiding duplicate entry)
+        $client = Client::firstOrCreate(
+            ['email' => 'priscilla@solid-wedge.com'], 
+            [
+                'name' => 'Priscilla Chikuhwa',
+                'phone' => '+27113145873',
+                'company_name' => 'SolidWedge',
+                'sales_rep_id' => $user->id
+            ]
+        );
 
-        // Create Sample Client
-        Client::create([
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-            'phone' => '1234567890',
-            'company_name' => 'TechCorp',
-            'sales_rep_id' => 'Takudzwa Mlambo'
-        ]);
+        // Create an invoice for the client
+        if ($client) {
+            Invoice::create([
+                'client_id' => $client->id,
+                'amount' => 75.00,
+                'status' => 'unpaid',
+                'due_date' => now()->addDays(7)
+            ]);
 
-        // Create Sample Invoice
-        Invoice::create([
-            'client_id' => 'John Doe',
-            'amount' => 2500.00,
-            'status' => 'unpaid',
-            'due_date' => now()->addDays(30)
-        ]);
+            // Fetch and display the client's invoices
+            $clientInvoices = $client->invoices;
+            dump($clientInvoices);
+        } else {
+            dd("Client does not exist.");
+        }
     }
 }

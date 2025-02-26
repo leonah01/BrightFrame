@@ -1,11 +1,40 @@
-use Jenssegers\Mongodb\Eloquent\Model;
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Project extends Model
 {
-    protected $connection = 'mongodb';
-    protected $collection = 'projects';
+    use HasFactory;
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'projects';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'name', 'description', 'status', 'assigned_to', 'github_repo'
+        'name',
+        'description',
+        'status',
+        'assigned_to', // Reference to User ID
+        'github_repo',
     ];
+
+    /**
+     * Define relationship: A project belongs to a user.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
 }
