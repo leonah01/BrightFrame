@@ -6,20 +6,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
     /**
-     * The table associated with the model.
+     * Table name associated with this model.
      *
      * @var string
      */
-    protected $table = 'users'; // Explicitly set the table name
+    protected $table = 'users';
 
     /**
-     * The attributes that are mass assignable.
+     * User role constants.
+     */
+    const ROLE_ADMIN = 'admin';
+    const ROLE_DEVELOPER = 'developer';
+    const ROLE_SALES = 'sales';
+
+    /**
+     * Mass assignable attributes.
      *
      * @var array<int, string>
      */
@@ -27,11 +35,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // Ensure roles can be assigned
+        'role', // Ensures roles can be assigned
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Attributes that should be hidden from serialization.
      *
      * @var array<int, string>
      */
@@ -41,7 +49,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Attribute casting.
      *
      * @var array<string, string>
      */
@@ -51,7 +59,39 @@ class User extends Authenticatable
     ];
 
     /**
-     * Define relationship: A user can have many projects.
+     * Check if the user is an Admin.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    /**
+     * Check if the user is a Developer.
+     *
+     * @return bool
+     */
+    public function isDeveloper(): bool
+    {
+        return $this->role === self::ROLE_DEVELOPER;
+    }
+
+    /**
+     * Check if the user is a Sales representative.
+     *
+     * @return bool
+     */
+    public function isSales(): bool
+    {
+        return $this->role === self::ROLE_SALES;
+    }
+
+    /**
+     * Relationship: A user can have many projects.
+     *
+     * @return HasMany
      */
     public function projects(): HasMany
     {

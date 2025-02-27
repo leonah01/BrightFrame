@@ -27,24 +27,26 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+    public function store(Request $request)
+{
+    // Only allow admins to register users
+    if (!Auth::check() || Auth::user()->role !== 'admin') {
+        return redirect('/')->with('error', 'Only admins can register users.');
     }
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users|ends_with:@brightframe.co.zw',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
+
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => bcrypt($request->password),
+        'role' => 'developer' // Default role
+    ]);
+
+    return redirect('/dashboard')->with('success', 'User created successfully.');
+}
 }
