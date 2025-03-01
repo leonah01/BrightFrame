@@ -58,10 +58,10 @@ return [
     | User Avatar
     |-------------------------------------
     */
-    'user_avatar' => [
-        'folder' => 'users-avatar',
-        'default' => 'avatar.png',
-    ],
+    'user_avatar' => function ($user) {
+        return $user->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name);
+    },
+    
 
     /*
     |-------------------------------------

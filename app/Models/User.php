@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Fortify\Features;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -97,4 +98,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Project::class, 'assigned_to');
     }
+
+    public function profilePhotoUrl()
+{
+    return $this->profile_photo_path
+        ? asset('storage/' . $this->profile_photo_path)
+        : 'https://ui-avatars.com/api/?name=' . urlencode($this->name);
+}
 }

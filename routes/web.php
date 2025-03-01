@@ -4,6 +4,22 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Chatify\ChatifyMessenger;
+
+/*
+|--------------------------------------------------------------------------
+| Chatify Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->get('/chat', function () {
+    return view('Chatify::pages.app', [
+        'id' => auth()->id(),
+        'messengerColor' => config('chatify.colors.default'),
+        'dark_mode' => 'dark' // Change to 'dark' if you have a dark mode option
+    ]);
+})->name('chat');
+
+Route::patch('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.update-photo');
 
 /*
 |--------------------------------------------------------------------------
